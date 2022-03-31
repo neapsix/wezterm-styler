@@ -70,19 +70,20 @@ local function override_colors(window)
     -- Get the current colors
     local colors_to_match = {}
 
-    local color_scheme = window.effective_config().color_scheme
-    local color_scheme_dirs = window.effective_config().color_scheme_dirs
+    local color_scheme = window:effective_config().color_scheme
+    local color_scheme_dirs = window:effective_config().color_scheme_dirs
 
     if color_scheme then
         -- Get the colors from the color scheme in config.color_scheme
         colors_to_match = get_color_scheme_definitions(color_scheme, color_scheme_dirs)
     else
-        -- TODO: Get the colors specified in lua in config.colors
-        -- colors_to_match = those colors
+        -- Get the colors specified in lua in config.colors
+        colors_to_match = window:effective_config().colors
     end
 
     local colors = {}
     local window_frame = {}
+    -- TODO: Check whether we have the colors we need in the definitions (background, gray, selection, selection foregrounad)
     -- TODO: Populate colors and window frame tables from the colors_to_match table
 
     -- Get any config overrides that are already specified
@@ -104,6 +105,10 @@ wezterm.on('window-config-reloaded', function(window, pane)
     -- debug_stuff(window)
     local color_scheme = window:effective_config().color_scheme
     local color_scheme_dirs = window:effective_config().color_scheme_dirs
-    wezterm.log_info(get_color_scheme_path(color_scheme, color_scheme_dirs))
+    if color_scheme then
+        wezterm.log_info(get_color_scheme_path(color_scheme, color_scheme_dirs))
+    else
+        wezterm.log_info(window:effective_config().colors)
+    end
 end)
 
