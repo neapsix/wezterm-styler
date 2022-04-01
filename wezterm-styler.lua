@@ -56,8 +56,8 @@ local function get_color_scheme_definitions(color_scheme, color_scheme_dirs)
 
     -- Search through the built-in color schemes
     -- If it's one of those, get the color scheme definitions
-    if wezterm.get_builtin_color_schemes().color_scheme then
-        color_scheme_definitions = wezterm.get_builtin_color_schemes().color_scheme
+    if wezterm.get_builtin_color_schemes()[color_scheme] then
+        color_scheme_definitions = wezterm.get_builtin_color_schemes()[color_scheme]
     else
         local path = get_color_scheme_path(color_scheme, color_scheme_dirs)
         color_scheme_definitions = read_toml_file(path)
