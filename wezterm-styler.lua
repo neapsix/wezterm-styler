@@ -21,7 +21,7 @@ end
 
 local function get_color_scheme_path(color_scheme, color_scheme_dirs)
     if color_scheme_dirs then
-        -- Search through color_scheme_dirs option if specified
+        -- Search through directories in color_scheme_dirs option if specified
         for _, directory in ipairs(color_scheme_dirs) do
             -- In each directory, search through files
             for _, filepath in ipairs(wezterm.read_dir(directory)) do
@@ -33,7 +33,7 @@ local function get_color_scheme_path(color_scheme, color_scheme_dirs)
         end
     end
 
-    -- Search through files in the default colors dir
+    -- Search through files in the default colors directory
     for _, filepath in ipairs(wezterm.read_dir(wezterm.config_dir .. '/colors')) do
         -- If one of the files is our color scheme, return its path
         if filepath == wezterm.config_dir .. '/colors/' .. color_scheme .. '.toml' then
