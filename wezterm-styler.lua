@@ -22,7 +22,7 @@ local function build_tab_bar(source)
 
     local inactive_tab = {
         bg_color = source['background'],
-        fg_color = source.brights[1], -- brights[0]: gray
+        fg_color = source.brights[1], -- brights[1]: gray
     }
 
     return {
@@ -51,7 +51,13 @@ local function override_colors(window)
         return
     end
 
-    -- TODO: Check whether we have the colors we need in the definitions (background, gray, selection, selection foreground)
+    -- Check whether we have the colors we need in the definitions
+    local must_have_keys = {'background', 'selection_bg', 'selection_fg', 'brights'}
+
+    for _, v in ipairs(must_have_keys) do
+        if not colors_to_match[v] then return end
+    end
+
     -- TODO: Check whether config.colors.tab_bar.* or config.window_frame.* is already specified; don't clobber existing config
 
     -- Populate colors and window frame tables from the colors_to_match table
