@@ -67,6 +67,10 @@ local function override_colors(window)
     -- Get any config overrides that are already specified
     local overrides = window:get_config_overrides() or {}
 
+    if not overrides.colors then
+        overrides.colors = {}
+    end
+
     -- Add config override to change the tab colors
     overrides.colors.tab_bar = tab_bar
 
