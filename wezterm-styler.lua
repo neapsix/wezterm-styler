@@ -75,14 +75,6 @@ end
 
 
 wezterm.on('window-config-reloaded', function(window, pane)
-    -- debug_stuff(window)
-    --[[ local color_scheme = window:effective_config().color_scheme
-    local color_scheme_dirs = window:effective_config().color_scheme_dirs
-    if color_scheme then
-        wezterm.log_info(get_color_scheme_path(color_scheme, color_scheme_dirs))
-    else
-        wezterm.log_info(window:effective_config().colors)
-    end ]]
     override_colors(window)
 end)
 
