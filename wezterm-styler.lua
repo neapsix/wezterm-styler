@@ -3,6 +3,8 @@ local wezterm = require 'wezterm'
 local function get_colors(window)
     local color_scheme = window:effective_config().color_scheme
 
+    -- TODO: If neither a color scheme nor colors are specified, use the default color scheme
+
     -- Use the color_scheme if it's specified, config.colors if it's not
     if color_scheme then
         -- Get colors from a custom color scheme or a built-in color scheme
