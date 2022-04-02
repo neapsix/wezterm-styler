@@ -114,6 +114,10 @@ local function override_colors(window)
     -- Get the current colors
     local colors_to_match = get_colors(window)
 
+    if not colors_to_match then
+        return
+    end
+
     -- TODO: Check whether we have the colors we need in the definitions (background, gray, selection, selection foreground)
 
     -- Populate colors and window frame tables from the colors_to_match table
