@@ -5,7 +5,7 @@ local function get_colors(window)
 
     -- Use the color_scheme if it's specified, config.colors if it's not
     if color_scheme then
-        -- Get the color definitions for the color scheme
+        -- Get colors from a custom color scheme or a built-in color scheme
         return window:effective_config().color_schemes[color_scheme]
             or wezterm.get_builtin_color_schemes()[color_scheme]
     else
@@ -54,6 +54,7 @@ local function override_colors(window)
     end
 
     -- TODO: Check whether we have the colors we need in the definitions (background, gray, selection, selection foreground)
+    -- TODO: Check whether config.colors.tab_bar.* or config.window_frame.* is already specified; don't clobber existing config
 
     -- Populate colors and window frame tables from the colors_to_match table
     local colors = build_colors(colors_to_match)
