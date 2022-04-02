@@ -14,7 +14,7 @@ local function get_colors(window)
     end
 end
 
-local function build_colors(source)
+local function build_tab_bar(source)
     local active_tab = {
         bg_color = source['selection_bg'],
         fg_color = source['selection_fg'],
@@ -26,15 +26,13 @@ local function build_colors(source)
     }
 
     return {
-        tab_bar = {
-            background = source['background'],
-            active_tab = active_tab,
-            inactive_tab = inactive_tab,
-            inactive_tab_hover = active_tab,
-            new_tab = inactive_tab,
-            new_tab_hover = active_tab,
-            inactive_tab_edge = source.brights[1], -- (Fancy tab bar only)
-        }
+        background = source['background'],
+        active_tab = active_tab,
+        inactive_tab = inactive_tab,
+        inactive_tab_hover = active_tab,
+        new_tab = inactive_tab,
+        new_tab_hover = active_tab,
+        inactive_tab_edge = source.brights[1], -- (Fancy tab bar only)
     }
 end
 
@@ -57,14 +55,14 @@ local function override_colors(window)
     -- TODO: Check whether config.colors.tab_bar.* or config.window_frame.* is already specified; don't clobber existing config
 
     -- Populate colors and window frame tables from the colors_to_match table
-    local colors = build_colors(colors_to_match)
+    local tab_bar = build_tab_bar(colors_to_match)
     local window_frame = build_window_frame(colors_to_match)
 
     -- Get any config overrides that are already specified
     local overrides = window:get_config_overrides() or {}
 
     -- Add config override to change the tab colors
-    overrides.colors = colors
+    overrides.colors.tab_bar = tab_bar
 
     -- If using fancy tabs, change the colors that are in window_frame too
     if window:effective_config().use_fancy_tab_bar then
