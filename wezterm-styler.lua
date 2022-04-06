@@ -3,17 +3,37 @@ local wezterm = require 'wezterm'
 local function get_colors(window)
     local color_scheme = window:effective_config().color_scheme
 
-    -- TODO: If neither a color scheme nor colors are specified, use the default color scheme
+    local colors = {}
 
     -- Use the color_scheme if it's specified, config.colors if it's not
     if color_scheme then
         -- Get colors from a custom color scheme or a built-in color scheme
-        return window:effective_config().color_schemes[color_scheme]
+        colors = window:effective_config().color_schemes[color_scheme]
             or wezterm.get_builtin_color_schemes()[color_scheme]
     else
         -- Get the colors specified in lua in config.colors
-        return window:effective_config().colors
+        colors = window:effective_config().colors
     end
+
+    -- Fallback colors are from the default color scheme in colors.rs
+    local fallback_colors = {
+        background = '#000000',
+        selection_bg = '#FFFACD',
+        selection_fg = '#000000',
+        brights = {
+            '#858585',
+        },
+    }
+
+    -- Check whether we have the colors we need in the definitions
+    for k, v in pairs(fallback_colors) do
+        if not colors[k] then
+            -- If not, then we're using the default scheme, so get it from there
+            colors[k] = v
+        end
+    end
+
+    return colors
 end
 
 local function build_tab_bar(source)
@@ -49,17 +69,6 @@ local function override_colors(window)
     -- Get the current colors
     local colors_to_match = get_colors(window)
 
-    if not colors_to_match then
-        return
-    end
-
-    -- Check whether we have the colors we need in the definitions
-    local must_have_keys = {'background', 'selection_bg', 'selection_fg', 'brights'}
-
-    for _, v in ipairs(must_have_keys) do
-        if not colors_to_match[v] then return end
-    end
-
     -- TODO: Check whether config.colors.tab_bar.* or config.window_frame.* is already specified; don't clobber existing config
 
     -- Populate colors and window frame tables from the colors_to_match table
@@ -88,4 +97,3 @@ end
 wezterm.on('window-config-reloaded', function(window, pane)
     override_colors(window)
 end)
-
