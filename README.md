@@ -1,6 +1,10 @@
 # wezterm-styler
 
-Changes the colors of the tabs in [WezTerm](https://wezfurlong.org/wezterm/index.html) to match your terminal color scheme. 
+Changes the colors of the tabs in [WezTerm](https://wezfurlong.org/wezterm/index.html) to match your selected color scheme or the colors defined in your configuration file.
+
+## Installation
+
+Add `wezterm-styler.lua` to the same directory as your `wezterm.lua` configuration file.
 
 ## Usage
 
@@ -9,8 +13,7 @@ Add the following line to your `wezterm.lua` configuration above the `return` bl
 ```lua
 require 'wezterm-styler'
 ```
-
-Make sure you have a color scheme selected or colors defined in lua. If you use custom colors (not one of the built-in color schemes), your color scheme must include `background`, `selection_bg`, `selection_fg`, and an ANSI Bright Black color (the first color in `brights`).
+Colors for the tab bar are determined using the values for `background`, `selection_bg`, `selection_fg`, and ANSI gray (the first color in `brights`).
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
