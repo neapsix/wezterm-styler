@@ -69,8 +69,6 @@ local function override_colors(window)
     -- Get the current colors
     local colors_to_match = get_colors(window)
 
-    -- TODO: Check whether config.colors.tab_bar.* or config.window_frame.* is already specified; don't clobber existing config
-
     -- Populate colors and window frame tables from the colors_to_match table
     local tab_bar = build_tab_bar(colors_to_match)
     local window_frame = build_window_frame(colors_to_match)
@@ -78,6 +76,7 @@ local function override_colors(window)
     -- Get any config overrides that are already specified
     local overrides = window:get_config_overrides() or {}
 
+    -- Set up the overrides table if needed
     if not overrides.colors then
         overrides.colors = {}
     end
@@ -94,6 +93,6 @@ local function override_colors(window)
 end
 
 
-wezterm.on('window-config-reloaded', function(window, pane)
+wezterm.on('window-config-reloaded', function(window)
     override_colors(window)
 end)
